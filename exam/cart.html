@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOP — Корзина</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- шапка, как на других страницах, только вместо поиска пустышка -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <!-- логотип с буквой О в кружочке -->
+      <a href="index.html" class="header__logo">SH<span>O</span>P</a>
+      <!-- заглушка чтобы хедер не съезжал, поиска тут нет -->
+      <div class="header__search header__search--hidden" aria-hidden="true"></div>
+      <!-- навигация: каталог и кабинет -->
+      <nav class="header__nav" aria-label="Навигация">
+        <a href="index.html" class="header__nav-btn" aria-label="Каталог">🏠 <span>Каталог</span></a>
+        <a href="profile.html" class="header__nav-btn" aria-label="Личный кабинет">👤 <span>Кабинет</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- контейнер для уведомлений, сюда будут падать сообщения -->
+  <div id="notifications" class="notifications" aria-live="polite"></div>
+
+  <!-- основная часть страницы, две колонки -->
+  <main class="cart-page" role="main">
+
+    <!-- левая колонка: список товаров в корзине -->
+    <section aria-label="Товары в корзине">
+      <h1 class="cart-section__title">Корзина</h1>
+
+      <!-- заглушка пустой корзины, скрыта пока есть товары -->
+      <div id="cart-empty" class="cart__empty hidden">
+        <div class="cart__empty-icon">🛒</div>
+        <p>Корзина пуста.<br>
+          <a href="index.html">Перейдите в каталог</a>, чтобы добавить товары.
+        </p>
+      </div>
+
+      <!-- сетка с карточками товаров, пока грузится спиннер -->
+      <div id="cart-grid" class="cart__grid">
+        <div class="loader"><div class="loader__spinner"></div></div>
+      </div>
+    </section>
+
+    <!-- правая колонка: форма оформления заказа -->
+    <aside>
+      <div class="order-form">
+        <h2 class="order-form__title">Оформление заказа</h2>
+
+        <!-- имя, обязательное поле -->
+        <div class="form-group">
+          <label for="order-name">Полное имя *</label>
+          <input type="text" id="order-name" class="form-control" placeholder="Иванов Иван Иванович" required>
+        </div>
+
+        <!-- email для подтверждения заказа -->
+        <div class="form-group">
+          <label for="order-email">Email *</label>
+          <input type="email" id="order-email" class="form-control" placeholder="ivan@mail.ru" required>
+        </div>
+
+        <!-- телефон для связи с курьером -->
+        <div class="form-group">
+          <label for="order-phone">Телефон *</label>
+          <input type="tel" id="order-phone" class="form-control" placeholder="+7 (999) 123-45-67" required>
+        </div>
+
+        <!-- чекбокс подписки на новости -->
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" id="order-subscribe">
+            Получать рассылку
+          </label>
+        </div>
+
+        <!-- куда везти товар -->
+        <div class="form-group">
+          <label for="order-address">Адрес доставки *</label>
+          <input type="text" id="order-address" class="form-control" placeholder="г. Москва, ул. Ленина, д. 1" required>
+        </div>
+
+        <!-- когда везти, календарик -->
+        <div class="form-group">
+          <label for="order-date">Дата доставки *</label>
+          <input type="date" id="order-date" class="form-control" required>
+        </div>
+
+        <!-- выбор временного интервала -->
+        <div class="form-group">
+          <label for="order-interval">Время доставки *</label>
+          <select id="order-interval" class="form-control" required>
+            <option value="">Выберите интервал</option>
+            <option value="08:00-12:00">08:00 – 12:00</option>
+            <option value="12:00-14:00">12:00 – 14:00</option>
+            <option value="14:00-18:00">14:00 – 18:00</option>
+            <option value="18:00-22:00">18:00 – 22:00</option>
+          </select>
+        </div>
+
+        <!-- комментарий для курьера, необязательно -->
+        <div class="form-group">
+          <label for="order-comment">Комментарий</label>
+          <textarea id="order-comment" class="form-control" placeholder="Дополнительные пожелания..."></textarea>
+        </div>
+
+        <!-- блок с итогами: товары, доставка, всего -->
+        <div class="order-summary">
+          <div class="order-summary__row">
+            <span>Товары</span>
+            <span id="summary-goods">0 ₽</span>
+          </div>
+          <div class="order-summary__row">
+            <span>Доставка</span>
+            <span id="summary-delivery">200 ₽</span>
+          </div>
+          <div class="order-summary__total">
+            <span>Итого</span>
+            <span id="summary-total">200 ₽</span>
+          </div>
+        </div>
+
+        <!-- кнопка отправки заказа -->
+        <button id="submit-order" class="order-form__submit">Оформить заказ</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- подвал с контактами и копирайтом -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <span>© 2026 Анастасия Парамонычева</span>
+      <span class="footer__contacts">info@shop.ru · +7 (495) 000-00-00</span>
+    </div>
+  </footer>
+
+  <!-- подключаю скрипты по порядку, cart-page.js отвечает за страницу корзины -->
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/cart-page.js"></script>
+
+</body>
+</html>

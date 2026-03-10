@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOP — Каталог товаров</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- шапка, чтобы было понятно где что -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <!-- логотип, букву О в кружочек обвела стилями -->
+      <a href="index.html" class="header__logo">SH<span>O</span>P</a>
+
+      <!-- поиск, сделала красивый инпут -->
+      <div class="header__search" role="search">
+        <input
+          type="search"
+          id="search-input"
+          class="header__search-input"
+          placeholder="Введите запрос"
+          aria-label="Поиск по каталогу"
+          autocomplete="off"
+        >
+        <button class="header__search-btn" id="search-btn" aria-label="Найти">Найти</button>
+      </div>
+
+      <!-- навигация, справа иконки -->
+      <nav class="header__nav" aria-label="Навигация">
+        <a href="cart.html" class="header__nav-btn" aria-label="Корзина">
+          🛒
+          <span class="header__cart-count hidden" aria-label="Товаров в корзине">0</span>
+        </a>
+        <a href="profile.html" class="header__nav-btn" aria-label="Личный кабинет">
+          👤
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- уведомления, например когда товар добавили -->
+  <div id="notifications" class="notifications" aria-live="polite"></div>
+
+  <!-- тут главный контент -->
+  <main class="page-layout" role="main">
+
+    <!-- сайдбар с фильтрами, слева -->
+    <aside class="sidebar" aria-label="Фильтры товаров">
+
+      <!-- список категорий, загружается с бэка -->
+      <section class="sidebar__section">
+        <h2 class="sidebar__section-heading">Категории</h2>
+        <div id="categories-list">
+          <span class="text-muted">Загрузка...</span>
+        </div>
+      </section>
+
+      <!-- фильтр по цене, сделала два поля -->
+      <section class="sidebar__section">
+        <h2 class="sidebar__section-heading">Стоимость</h2>
+        <div class="price-range">
+          <div class="price-range__field">
+            <label for="price-from" class="price-range__label">От</label>
+            <input
+              type="number"
+              id="price-from"
+              class="price-range__input"
+              min="0"
+              aria-label="Минимальная цена"
+            >
+          </div>
+          <div class="price-range__field">
+            <label for="price-to" class="price-range__label">До</label>
+            <input
+              type="number"
+              id="price-to"
+              class="price-range__input"
+              min="0"
+              aria-label="Максимальная цена"
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- галочка для товаров со скидкой -->
+      <section class="sidebar__section">
+        <label class="checkbox-item">
+          <input type="checkbox" id="filter-discount">
+          Только товары со скидками
+        </label>
+      </section>
+
+      <!-- кнопка применить фильтры -->
+      <button id="apply-filters" class="btn btn--apply">Применить</button>
+    </aside>
+
+    <!-- блок с товарами -->
+    <section aria-label="Каталог товаров">
+      <!-- заголовок и сортировка сверху -->
+      <div class="catalog__header">
+        <h1 class="catalog__title">Каталог</h1>
+        <!-- выпадашка для сортировки, варианты все прописала -->
+        <select id="sort-select" class="catalog__sort" aria-label="Сортировка товаров">
+          <option value="rating-desc">По убыванию рейтинга</option>
+          <option value="rating-asc">По возрастанию рейтинга</option>
+          <option value="price-desc">По убыванию цены</option>
+          <option value="price-asc">По возрастанию цены</option>
+        </select>
+      </div>
+
+      <!-- сетка с карточками товаров, пока грузится спиннер -->
+      <div id="goods-grid" class="catalog__grid" role="list">
+        <div class="loader"><div class="loader__spinner"></div></div>
+      </div>
+
+      <!-- кнопка загрузить ещё, скрыта пока товаров мало -->
+      <div class="catalog__more">
+        <button id="load-more-btn" class="catalog__more-btn hidden">
+          Загрузить ещё
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- подвал с контактами -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <span>© 2026 Анастасия Парамонычева</span>
+      <span class="footer__contacts">info@shop.ru · +7 (495) 000-00-00</span>
+    </div>
+  </footer>
+
+  <!-- скрипты подключаю в правильном порядке -->
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/catalog.js"></script>
+
+</body>
+</html>
